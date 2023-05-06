@@ -17,12 +17,12 @@ async function bootstrap() {
 
   SwaggerModule.setup('api/v1/docs', app, document);
 
-  await app.listen(+process.env.PORT);
+  await app.listen(3000);
 }
 bootstrap()
   .then(() => {
-    console.log(`Server: http://localhost:${+process.env.PORT}`);
-    console.log(`Swagger: http://localhost:${+process.env.PORT}/api/v1/docs`);
+    console.log(`Server: http://localhost:${process.env.PORT}`);
+    console.log(`Swagger: http://localhost:3000/api/v1/docs`);
   })
   .catch((err) => {
     console.log('Error: ', err);

@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-export const StudentModel = z.object({
+export const UniversitySchema = z.object({
   name: z.any(),
   description: z.any(),
 });

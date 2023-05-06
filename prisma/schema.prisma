@@ -2,12 +2,12 @@
 //   provider = "zod-prisma"
 //   output   = "./zod" // (default) the directory where generated zod schemas will be saved
 
-generator zod {
-  provider          = "zod-prisma"
-  output            = "../src/schemas"
-  isGenerateSelect  = true
-  isGenerateInclude = true
-}
+// generator zod {
+//   provider          = "zod-prisma"
+//   output            = "../src/schemas"
+//   isGenerateSelect  = true
+//   isGenerateInclude = true
+// }
 
 generator client {
   provider = "prisma-client-js"
@@ -18,46 +18,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model University {
-//   id          String      @id @default(uuid())
-//   name        String?
-//   description String?
-//   professors  Professor[] @relation("university_professors")
-//   students    Student[]   @relation("university_students")
-//   projects    Project[]   @relation("university_projects")
-// }
-
-// model Company {
-//   id       String    @id @default(uuid())
-//   name     String
-//   projects Project[] @relation("company_projects")
-// }
-
-// model Professor {
-//   id           String     @id @default(uuid())
-//   name         String?
-//   description  String?
-//   university   University @relation("university_professors", fields: [universityId], references: [id])
-//   universityId String
-//   students     Student[]  @relation("professor_students")
-// }
-
-model Student {
-  id          Int     @id @default(autoincrement())
+model University {
+  id          Int         @id @default(autoincrement())
   name        String?
   description String?
-  // university   University @relation("university_students", fields: [universityId], references: [id])
-  // universityId String
-  // professor    Professor? @relation("professor_students", fields: [professorId], references: [id])
-  // professorId  String?
+  professors  Professor[] @relation("university_professors")
+  students    Student[]   @relation("university_students")
+  projects    Project[]   @relation("university_projects")
 }
 
-// model Project {
-//   id           String      @id @default(uuid())
-//   name         String?
-//   description  String?
-//   university   University? @relation("university_projects", fields: [universityId], references: [id])
-//   universityId String?
-//   company      Company?    @relation("company_projects", fields: [companyId], references: [id])
-//   companyId    String?
-// }
+model Company {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  projects    Project[] @relation("company_projects")
+}
+
+model Professor {
+  id           Int        @id @default(autoincrement())
+  name         String?
+  description  String?
+  university   University @relation("university_professors", fields: [universityId], references: [id])
+  universityId Int
+  students     Student[]  @relation("professor_students")
+}
+
+model Student {
+  id           Int        @id @default(autoincrement())
+  name         String?
+  description  String?
+  university   University @relation("university_students", fields: [universityId], references: [id])
+  universityId Int
+  professor    Professor? @relation("professor_students", fields: [professorId], references: [id])
+  professorId  Int?
+}
+
+model Project {
+  id           Int         @id @default(autoincrement())
+  name         String?
+  description  String?
+  university   University? @relation("university_projects", fields: [universityId], references: [id])
+  universityId Int?
+  company      Company?    @relation("company_projects", fields: [companyId], references: [id])
+  companyId    Int?
+}
