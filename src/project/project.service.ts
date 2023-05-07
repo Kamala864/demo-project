@@ -12,50 +12,6 @@ export class ProjectService {
   }
 
   findAll() {
-    const newProjectName = 'New Project Name';
-    const newProjectDescription = 'Description of the new project';
-
-    const existingProjects = [
-      {
-        name: 'Existing Project 1',
-        description: 'Description of existing project 1',
-      },
-      {
-        name: 'Existing Project 2',
-        description: 'Description of existing project 2',
-      },
-    ];
-
-    for (const project of existingProjects) {
-      const nameDistance = LevenshteinDistance(newProjectName, project.name);
-      const descriptionDistance = LevenshteinDistance(
-        newProjectDescription,
-        project.description,
-      );
-
-      // Normalize the distances to obtain similarity scores
-      const nameSimilarity =
-        (1 -
-          nameDistance / Math.max(newProjectName.length, project.name.length)) *
-        100;
-      const descriptionSimilarity =
-        (1 -
-          descriptionDistance /
-            Math.max(
-              newProjectDescription.length,
-              project.description.length,
-            )) *
-        100;
-
-      console.log(
-        `Name similarity with ${project.name}: ${nameSimilarity.toFixed(2)}%`,
-      );
-      console.log(
-        `Description similarity with ${
-          project.name
-        }: ${descriptionSimilarity.toFixed(2)}%`,
-      );
-    }
     return this.prisma.project.findMany();
   }
 
@@ -72,5 +28,45 @@ export class ProjectService {
 
   remove(id: string) {
     return this.prisma.project.delete({ where: { id: id } });
+  }
+
+  async newProjectSimilarity() {}
+
+  async findSimilarity(search: string) {
+    const existing = await this.prisma.project.findMany({
+      orderBy: [{ createdAt: 'desc' }],
+    });
+    const newProjectName = existing[0].name;
+    const newProjectDescription = existing[0].description;
+    existing.shift();
+    const result = [];
+    for (const project of existing) {
+      const nameDistance = LevenshteinDistance(newProjectName, project.name);
+      const descriptionDistance = LevenshteinDistance(
+        newProjectDescription,
+        project.description,
+      );
+      const nameSimilarity =
+        (1 -
+          nameDistance / Math.max(newProjectName.length, project.name.length)) *
+        100;
+      const descriptionSimilarity =
+        (1 -
+          descriptionDistance /
+            Math.max(
+              newProjectDescription.length,
+              project.description.length,
+            )) *
+        100;
+      result.push(
+        { nameSimilarity: ` ${project.name}: ${nameSimilarity.toFixed(2)}%` },
+        {
+          descriptionSimilarity: ` ${
+            project.description
+          }: ${descriptionSimilarity.toFixed(2)}%`,
+        },
+      );
+    }
+    return result;
   }
 }
