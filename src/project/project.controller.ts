@@ -37,6 +37,15 @@ export class ProjectController {
     };
   }
 
+  @Get('get-similarity')
+  async findSimilarity() {
+    console.log('data');
+    return {
+      status: HttpStatus.OK,
+      data: await this.projectService.findSimilarity(),
+    };
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return {

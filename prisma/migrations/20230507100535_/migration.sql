@@ -42,6 +42,7 @@ CREATE TABLE "Project" (
     "id" TEXT NOT NULL,
     "name" TEXT,
     "description" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "universityId" TEXT,
     "companyId" TEXT,
 

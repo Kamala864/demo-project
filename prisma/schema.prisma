@@ -57,6 +57,7 @@ model Project {
   id           String      @id @default(uuid())
   name         String?
   description  String?
+  createdAt    DateTime    @default(now())
   university   University? @relation("university_projects", fields: [universityId], references: [id])
   universityId String?
   company      Company?    @relation("company_projects", fields: [companyId], references: [id])
