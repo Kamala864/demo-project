@@ -14,18 +14,18 @@ export class StudentService {
     return this.prisma.student.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.student.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateStudentDto: UpdateStudentDto) {
+  update(id: string, updateStudentDto: UpdateStudentDto) {
     return this.prisma.student.update({
       where: { id: id },
       data: updateStudentDto,
     });
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.prisma.student.delete({ where: { id: id } });
   }
 }

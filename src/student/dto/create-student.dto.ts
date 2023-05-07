@@ -7,8 +7,8 @@ export class CreateStudentDto {
   description: string;
 
   @ApiProperty()
-  universityId: number | null;
+  universityId: string | null;
 
   @ApiProperty()
-  professorId: number | null;
+  professorId: string | null;
 }

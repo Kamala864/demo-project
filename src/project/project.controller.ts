@@ -41,7 +41,7 @@ export class ProjectController {
   async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.findOne(+id),
+      data: await this.projectService.findOne(id),
     };
   }
 
@@ -52,7 +52,7 @@ export class ProjectController {
   ) {
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.update(+id, updateProjectDto),
+      data: await this.projectService.update(id, updateProjectDto),
     };
   }
 
@@ -60,7 +60,7 @@ export class ProjectController {
   async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.remove(+id),
+      data: await this.projectService.remove(id),
     };
   }
 }

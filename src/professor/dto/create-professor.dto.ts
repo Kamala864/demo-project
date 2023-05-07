@@ -17,5 +17,5 @@ export class CreateProfessorDto {
   description: string;
 
   @ApiProperty()
-  universityId: number | null;
+  universityId: string | null;
 }

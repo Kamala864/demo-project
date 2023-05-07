@@ -37,29 +37,29 @@ export class ProfessorController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.professorService.findOne(+id),
+      data: await this.professorService.findOne(id),
     };
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateProfessorDto: UpdateProfessorDto,
   ) {
     return {
       status: HttpStatus.OK,
-      data: await this.professorService.update(+id, updateProfessorDto),
+      data: await this.professorService.update(id, updateProfessorDto),
     };
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.professorService.remove(+id),
+      data: await this.professorService.remove(id),
     };
   }
 }

@@ -40,30 +40,30 @@ export class CompanyController {
 
   @Get(':id')
   @ApiOperation({ summary: 'get company by id' })
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.companyService.findOne(+id),
+      data: await this.companyService.findOne(id),
     };
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
   ) {
     CompanySchema.parse(updateCompanyDto);
     return {
       status: HttpStatus.OK,
-      data: await this.companyService.update(+id, updateCompanyDto),
+      data: await this.companyService.update(id, updateCompanyDto),
     };
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.companyService.remove(+id),
+      data: await this.companyService.remove(id),
     };
   }
 }

@@ -15,11 +15,11 @@ export class UniversityService {
     return this.prisma.university.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.university.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateUniversityDto: UpdateUniversityDto) {
+  update(id: string, updateUniversityDto: UpdateUniversityDto) {
     return this.prisma.university.update({
       where: {
         id: id,
@@ -28,7 +28,7 @@ export class UniversityService {
     });
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.prisma.university.delete({ where: { id: id } });
   }
 }

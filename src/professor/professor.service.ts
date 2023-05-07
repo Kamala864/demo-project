@@ -14,20 +14,20 @@ export class ProfessorService {
     return this.prisma.professor.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.professor.findUnique({
       where: { id: id },
     });
   }
 
-  update(id: number, updateProfessorDto: UpdateProfessorDto) {
+  update(id: string, updateProfessorDto: UpdateProfessorDto) {
     return this.prisma.professor.update({
       where: { id: id },
       data: updateProfessorDto,
     });
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.prisma.professor.delete({ where: { id: id } });
   }
 }

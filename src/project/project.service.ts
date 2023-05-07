@@ -11,18 +11,21 @@ export class ProjectService {
   }
 
   findAll() {
-    return `This action returns all project`;
+    return this.prisma.project.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} project`;
+  findOne(id: string) {
+    return this.prisma.project.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateProjectDto: UpdateProjectDto) {
-    return `This action updates a #${id} project`;
+  update(id: string, updateProjectDto: UpdateProjectDto) {
+    return this.prisma.project.update({
+      where: { id: id },
+      data: updateProjectDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} project`;
+  remove(id: string) {
+    return this.prisma.project.delete({ where: { id: id } });
   }
 }

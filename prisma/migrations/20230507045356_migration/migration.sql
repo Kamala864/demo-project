@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "University" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT,
     "description" TEXT,
 
@@ -9,7 +9,7 @@ CREATE TABLE "University" (
 
 -- CreateTable
 CREATE TABLE "Company" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
 
@@ -18,32 +18,32 @@ CREATE TABLE "Company" (
 
 -- CreateTable
 CREATE TABLE "Professor" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT,
     "description" TEXT,
-    "universityId" INTEGER NOT NULL,
+    "universityId" TEXT NOT NULL,
 
     CONSTRAINT "Professor_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Student" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT,
     "description" TEXT,
-    "universityId" INTEGER NOT NULL,
-    "professorId" INTEGER,
+    "universityId" TEXT NOT NULL,
+    "professorId" TEXT,
 
     CONSTRAINT "Student_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Project" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT,
     "description" TEXT,
-    "universityId" INTEGER,
-    "companyId" INTEGER,
+    "universityId" TEXT,
+    "companyId" TEXT,
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
 );

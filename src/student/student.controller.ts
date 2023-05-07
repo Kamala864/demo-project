@@ -40,7 +40,7 @@ export class StudentController {
   async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.studentService.findOne(+id),
+      data: await this.studentService.findOne(id),
     };
   }
 
@@ -52,7 +52,7 @@ export class StudentController {
     StudentSchema.parse(updateStudentDto);
     return {
       status: HttpStatus.OK,
-      data: await this.studentService.update(+id, updateStudentDto),
+      data: await this.studentService.update(id, updateStudentDto),
     };
   }
 
@@ -60,7 +60,7 @@ export class StudentController {
   async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.studentService.remove(+id),
+      data: await this.studentService.remove(id),
     };
   }
 }

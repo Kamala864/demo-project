@@ -40,29 +40,29 @@ export class UniversityController {
 
   @Get(':id')
   @ApiOperation({ summary: 'get university by id' })
-  async findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
-      data: await this.universityService.findOne(+id),
+      data: await this.universityService.findOne(id),
     };
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'update university ' })
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateUniversityDto: UpdateUniversityDto,
   ) {
     UniversitySchema.parse(updateUniversityDto);
     return {
       status: HttpStatus.OK,
-      date: await this.universityService.update(+id, updateUniversityDto),
+      date: await this.universityService.update(id, updateUniversityDto),
     };
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'delete university' })
-  async remove(@Param('id') id: number) {
+  async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
       data: await this.universityService.remove(id),

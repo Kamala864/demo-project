@@ -14,11 +14,11 @@ export class CompanyService {
     return this.prisma.company.findMany();
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.prisma.company.findUnique({ where: { id: id } });
   }
 
-  update(id: number, updateCompanyDto: UpdateCompanyDto) {
+  update(id: string, updateCompanyDto: UpdateCompanyDto) {
     return this.prisma.company.update({
       where: {
         id: id,
@@ -27,7 +27,7 @@ export class CompanyService {
     });
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.prisma.company.delete({ where: { id: id } });
   }
 }

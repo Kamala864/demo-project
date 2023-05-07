@@ -19,7 +19,7 @@ datasource db {
 }
 
 model University {
-  id          Int         @id @default(autoincrement())
+  id          String      @id @default(uuid())
   name        String?
   description String?
   professors  Professor[] @relation("university_professors")
@@ -28,37 +28,37 @@ model University {
 }
 
 model Company {
-  id          Int       @id @default(autoincrement())
+  id          String    @id @default(uuid())
   name        String
   description String
   projects    Project[] @relation("company_projects")
 }
 
 model Professor {
-  id           Int        @id @default(autoincrement())
+  id           String     @id @default(uuid())
   name         String?
   description  String?
   university   University @relation("university_professors", fields: [universityId], references: [id])
-  universityId Int
+  universityId String
   students     Student[]  @relation("professor_students")
 }
 
 model Student {
-  id           Int        @id @default(autoincrement())
+  id           String     @id @default(uuid())
   name         String?
   description  String?
   university   University @relation("university_students", fields: [universityId], references: [id])
-  universityId Int
+  universityId String
   professor    Professor? @relation("professor_students", fields: [professorId], references: [id])
-  professorId  Int?
+  professorId  String?
 }
 
 model Project {
-  id           Int         @id @default(autoincrement())
+  id           String      @id @default(uuid())
   name         String?
   description  String?
   university   University? @relation("university_projects", fields: [universityId], references: [id])
-  universityId Int?
+  universityId String?
   company      Company?    @relation("company_projects", fields: [companyId], references: [id])
-  companyId    Int?
+  companyId    String?
 }
