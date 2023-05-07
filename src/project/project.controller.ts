@@ -37,12 +37,12 @@ export class ProjectController {
     };
   }
 
-  @Get('get-similarity/:search')
-  async findSimilarity(@Param('search') search: string) {
+  @Get('get-similarity')
+  async findSimilarity() {
     console.log('data');
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.findSimilarity(search),
+      data: await this.projectService.findSimilarity(),
     };
   }
 
