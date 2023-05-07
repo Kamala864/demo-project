@@ -22,25 +22,22 @@ import { PrismaClient } from '@prisma/client';
   controllers: [AppController],
   providers: [AppService, PrismaClient, ProjectTrigger],
 })
-export class AppModule {
-  constructor(
-    private prisma: PrismaClient,
-    private projectTrigger: ProjectTrigger,
-  ) {
-    this.prisma.$on('beforeExit', async () => {
-      await this.prisma.$disconnect();
-    });
+export class AppModule {}
+// export class AppModule {
+//   constructor(
+//     private prisma: PrismaClient,
+//     private projectTrigger: ProjectTrigger,
+//   ) {
+//     this.prisma.$on('beforeExit', async () => {
+//       await this.prisma.$disconnect();
+//     });
 
-    // this.prisma.$on('afterDisconnect', async () => {
-    //   await this.prisma.$disconnect();
-    // });
+//     this.prisma.$use(async (params, next) => {
+//       if (params.model === 'Project' && params.action === 'create') {
+//         await this.projectTrigger.handleProjectCreatedEvent(params.args[0]);
+//       }
 
-    this.prisma.$use(async (params, next) => {
-      if (params.model === 'Project' && params.action === 'create') {
-        await this.projectTrigger.handleProjectCreatedEvent(params.args[0]);
-      }
-
-      return next(params);
-    });
-  }
-}
+//       return next(params);
+//     });
+//   }
+// }
