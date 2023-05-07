@@ -1,3 +1,14 @@
+// generator zod {
+//   provider = "zod-prisma"
+//   output   = "./zod" // (default) the directory where generated zod schemas will be saved
+
+// generator zod {
+//   provider          = "zod-prisma"
+//   output            = "../src/schemas"
+//   isGenerateSelect  = true
+//   isGenerateInclude = true
+// }
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,20 +18,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Student {
-  id          String @id @default(uuid())
-  name        String
-  description String
-}
-
 model University {
-  id          String @id @default(uuid())
-  name        String
-  description String
+  id          String      @id @default(uuid())
+  name        String?
+  description String?
+  professors  Professor[] @relation("university_professors")
+  students    Student[]   @relation("university_students")
+  projects    Project[]   @relation("university_projects")
 }
 
 model Company {
-  id          String @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String
+  projects    Project[] @relation("company_projects")
+}
+
+model Professor {
+  id           String     @id @default(uuid())
+  name         String?
+  description  String?
+  university   University @relation("university_professors", fields: [universityId], references: [id])
+  universityId String
+  students     Student[]  @relation("professor_students")
+}
+
+model Student {
+  id           String     @id @default(uuid())
+  name         String?
+  description  String?
+  university   University @relation("university_students", fields: [universityId], references: [id])
+  universityId String
+  professor    Professor? @relation("professor_students", fields: [professorId], references: [id])
+  professorId  String?
+}
+
+model Project {
+  id           String      @id @default(uuid())
+  name         String?
+  description  String?
+  university   University? @relation("university_projects", fields: [universityId], references: [id])
+  universityId String?
+  company      Company?    @relation("company_projects", fields: [companyId], references: [id])
+  companyId    String?
 }
