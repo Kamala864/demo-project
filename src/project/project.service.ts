@@ -18,8 +18,11 @@ export class ProjectService {
     return project;
   }
 
-  findAll() {
-    return this.prisma.project.findMany();
+  findAll(params: any = {}) {
+    return this.prisma.project.findMany({
+      take: +params.take,
+      skip: +params.skip,
+    });
   }
 
   findOne(id: string) {

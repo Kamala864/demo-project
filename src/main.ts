@@ -1,12 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
-import { Client } from 'pg';
-import listen from 'pg-listen';
-import { PrismaService } from './prisma/prisma.service';
-import { ProjectTrigger } from './triggers/project.trigger';
 import { listenToNotifications } from './triggers/trigger.listener';
 
 async function bootstrap() {
@@ -23,11 +17,6 @@ async function bootstrap() {
 
   SwaggerModule.setup('api/v1/docs', app, document);
   listenToNotifications();
-  // const projectNotificationService = app.get(ProjectTrigger);
-  // await projectNotificationService.listenForProjectMatches();
-
-  // const projectNotificationService = app.get(ProjectTrigger);
-  // await projectNotificationService.onModuleInit();
   await app.listen(3000);
 }
 
