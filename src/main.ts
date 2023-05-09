@@ -6,6 +6,8 @@ import { PrismaClient } from '@prisma/client';
 import { Client } from 'pg';
 import listen from 'pg-listen';
 import { PrismaService } from './prisma/prisma.service';
+import { ProjectTrigger } from './triggers/project.trigger';
+import { listenToNotifications } from './triggers/trigger.listener';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,9 +22,12 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
 
   SwaggerModule.setup('api/v1/docs', app, document);
+  listenToNotifications();
+  // const projectNotificationService = app.get(ProjectTrigger);
+  // await projectNotificationService.listenForProjectMatches();
 
-  //pg-trigger and pg-notify
-
+  // const projectNotificationService = app.get(ProjectTrigger);
+  // await projectNotificationService.onModuleInit();
   await app.listen(3000);
 }
 
