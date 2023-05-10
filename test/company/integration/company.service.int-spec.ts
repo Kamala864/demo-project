@@ -2,10 +2,10 @@
 //   it.todo('should pass');
 // });
 import { Test, TestingModule } from '@nestjs/testing';
-import { CompanyService } from 'src/company/company.service';
-import { CreateCompanyDto } from 'src/company/dto/create-company.dto';
-import { UpdateCompanyDto } from 'src/company/dto/update-company.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CompanyService } from '../../../src/company/company.service';
+import { CreateCompanyDto } from '../../../src/company/dto/create-company.dto';
+import { UpdateCompanyDto } from '../../../src/company/dto/update-company.dto';
+import { PrismaService } from '../../../src/prisma/prisma.service';
 // import { CompanyService } from '../../company.service';
 // import { PrismaService } from '../../../prisma/prisma.service';
 // import { CreateCompanyDto } from '../../dto/create-company.dto';
@@ -50,12 +50,46 @@ describe('CompanyService', () => {
 
   describe('findAll', () => {
     it('should return an array of companies', async () => {
-      const companies = await companyService.findAll();
+      const params = { skip: 0, take: 10 };
+      const companies = await companyService.findAll(params.skip, params.take);
 
       expect(companies).toBeDefined();
       expect(Array.isArray(companies)).toBe(true);
     });
   });
+
+  // describe('findAll', () => {
+  //   it('should return an array of companies', async () => {
+  //     // Mock the expected data to be returned by Prisma
+  //     const mockCompanies = [
+  //       {
+  //         id: '1',
+  //         name: 'Company A',
+  //         description: 'Company Description',
+  //         createdAt: new Date(),
+  //       },
+  //       {
+  //         id: '2',
+  //         name: 'Company B',
+  //         description: 'Company Description',
+  //         createdAt: new Date(),
+  //       },
+  //     ];
+
+  //     // Use the Prisma Client Mock to define the behavior of findMany
+  //     jest
+  //       .spyOn(prismaService.company, 'findMany')
+  //       .mockResolvedValue(mockCompanies);
+
+  //     // Invoke the `findAll` method
+  //     const params = { take: 10, skip: 0 };
+  //     const result = await companyService.findAll(+params.skip, +params.take);
+
+  //     // Expectations
+  //     expect(result).toEqual(mockCompanies);
+  //     expect(prismaService.company.findMany).toHaveBeenCalledTimes(1);
+  //   });
+  // });
 
   describe('findOne', () => {
     it('should return the company with the given id', async () => {

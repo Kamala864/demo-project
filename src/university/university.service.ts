@@ -12,10 +12,12 @@ export class UniversityService {
     return this.prisma.university.create({ data: createUniversityDto });
   }
 
-  findAll(params: any = {}) {
+  findAll(take: number, skip: number) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
     return this.prisma.university.findMany({
-      take: +params.take,
-      skip: +params.skip,
+      skip: validSkip,
+      take: validTake,
     });
   }
 

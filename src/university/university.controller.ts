@@ -36,7 +36,7 @@ export class UniversityController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.universityService.findAll(params),
+      data: await this.universityService.findAll(+params.take, +params.skip),
     };
   }
 
@@ -50,7 +50,6 @@ export class UniversityController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'update university ' })
   async update(
     @Param('id') id: string,
     @Body() updateUniversityDto: UpdateUniversityDto,
@@ -58,7 +57,7 @@ export class UniversityController {
     UniversitySchema.parse(updateUniversityDto);
     return {
       status: HttpStatus.OK,
-      date: await this.universityService.update(id, updateUniversityDto),
+      data: await this.universityService.update(id, updateUniversityDto),
     };
   }
 

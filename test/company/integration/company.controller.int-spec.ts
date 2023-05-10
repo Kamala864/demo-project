@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 
 import * as request from 'supertest';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { AppModule } from 'src/app.module';
+import { PrismaService } from '../../../src/prisma/prisma.service';
+import { AppModule } from '../../../src/app.module';
 
 describe('Company (e2e)', () => {
   let app: INestApplication;

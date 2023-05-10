@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { ProfessorService } from './professor.service';
 import { CreateProfessorDto } from './dto/create-professor.dto';
 import { UpdateProfessorDto } from './dto/update-professor.dto';
 import { ProfessorSchema } from '../schemas/professorSchema';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { BaseFilterDto } from '../common/base.filter';
 
 @ApiTags('Professor')
 @Controller('api/v1/professor')
@@ -29,10 +31,11 @@ export class ProfessorController {
   }
 
   @Get()
-  async findAll() {
+  @ApiOperation({ summary: 'get all professors' })
+  async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.professorService.findAll(),
+      data: await this.professorService.findAll(+params.take, +params.skip),
     };
   }
 
