@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CompanyService {
@@ -10,8 +10,11 @@ export class CompanyService {
     return this.prisma.company.create({ data: createCompanyDto });
   }
 
-  findAll() {
-    return this.prisma.company.findMany();
+  findAll(params: any = {}) {
+    return this.prisma.company.findMany({
+      take: params.take,
+      skip: params.skip,
+    });
   }
 
   findOne(id: string) {

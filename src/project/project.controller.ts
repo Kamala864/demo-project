@@ -13,8 +13,8 @@ import { ProjectService } from './project.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ProjectSchema } from 'src/schemas/projectSchema';
-import { BaseFilterDto } from 'src/common/base.filter';
+import { ProjectSchema } from '../schemas/projectSchema';
+import { BaseFilterDto } from '../common/base.filter';
 
 @ApiTags('Project')
 @Controller('api/v1/project')

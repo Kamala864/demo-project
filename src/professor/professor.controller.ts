@@ -11,7 +11,7 @@ import {
 import { ProfessorService } from './professor.service';
 import { CreateProfessorDto } from './dto/create-professor.dto';
 import { UpdateProfessorDto } from './dto/update-professor.dto';
-import { ProfessorSchema } from 'src/schemas/professorSchema';
+import { ProfessorSchema } from '../schemas/professorSchema';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Professor')

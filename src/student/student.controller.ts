@@ -12,7 +12,7 @@ import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { StudentSchema } from 'src/schemas/studentSchema';
+import { StudentSchema } from '../schemas/studentSchema';
 
 @ApiTags('Student')
 @Controller('api/v1/student')

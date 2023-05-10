@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { skip } from 'rxjs';
 
 @Injectable()
 export class UniversityService {
@@ -11,8 +12,11 @@ export class UniversityService {
     return this.prisma.university.create({ data: createUniversityDto });
   }
 
-  findAll() {
-    return this.prisma.university.findMany();
+  findAll(params: any = {}) {
+    return this.prisma.university.findMany({
+      take: +params.take,
+      skip: +params.skip,
+    });
   }
 
   findOne(id: string) {
