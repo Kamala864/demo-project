@@ -11,7 +11,6 @@ export class CompanyService {
   }
 
   findAll(take: number, skip: number) {
-    console.log(typeof take);
     const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
     const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
     return this.prisma.company.findMany({ skip: validSkip, take: validTake });
