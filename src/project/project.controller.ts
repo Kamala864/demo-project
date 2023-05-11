@@ -41,6 +41,7 @@ export class ProjectController {
   }
 
   @Get('get-similarity')
+  @ApiOperation({ summary: 'get similarity percentage' })
   async findSimilarity(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
@@ -49,6 +50,7 @@ export class ProjectController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'get project by id' })
   async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
@@ -57,6 +59,7 @@ export class ProjectController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'update project' })
   async update(
     @Param('id') id: string,
     @Body() updateProjectDto: UpdateProjectDto,
@@ -68,6 +71,7 @@ export class ProjectController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'delete project' })
   async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
