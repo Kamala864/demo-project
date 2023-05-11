@@ -3,13 +3,9 @@ import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { LevenshteinDistance } from 'natural';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 @Injectable()
 export class ProjectService {
-  constructor(
-    private eventEmitter: EventEmitter2,
-    private prisma: PrismaService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
   async create(createProjectDto: CreateProjectDto) {
     const project = await this.prisma.project.create({
       data: createProjectDto,
@@ -18,10 +14,12 @@ export class ProjectService {
     return project;
   }
 
-  findAll(params: any = {}) {
+  findAll(skip: number, take: number) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
     return this.prisma.project.findMany({
-      take: +params.take,
-      skip: +params.skip,
+      skip: validSkip,
+      take: validTake,
     });
   }
 

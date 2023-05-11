@@ -7,6 +7,6 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   imports: [EventEmitterModule.forRoot()],
   controllers: [ProjectController],
-  providers: [ProjectService, PrismaClient],
+  providers: [ProjectService],
 })
 export class ProjectModule {}

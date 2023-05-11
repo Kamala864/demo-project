@@ -6,13 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
   HttpStatus,
 } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { StudentSchema } from '../schemas/studentSchema';
+import { BaseFilterDto } from '../../src/common/base.filter';
 
 @ApiTags('Student')
 @Controller('api/v1/student')
@@ -29,10 +31,11 @@ export class StudentController {
   }
 
   @Get()
-  async findAll() {
+  @ApiOperation({ summary: 'get all student' })
+  async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.studentService.findAll(),
+      data: await this.studentService.findAll(+params.skip, +params.take),
     };
   }
 
