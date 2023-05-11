@@ -22,6 +22,7 @@ export class ProfessorController {
   constructor(private readonly professorService: ProfessorService) {}
 
   @Post()
+  @ApiOperation({ summary: 'create professors' })
   async create(@Body() createProfessorDto: CreateProfessorDto) {
     ProfessorSchema.parse(createProfessorDto);
     return {
@@ -40,6 +41,7 @@ export class ProfessorController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'get single professors by id' })
   async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
@@ -48,6 +50,7 @@ export class ProfessorController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'update professors' })
   async update(
     @Param('id') id: string,
     @Body() updateProfessorDto: UpdateProfessorDto,
@@ -59,6 +62,7 @@ export class ProfessorController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'delete professors' })
   async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,

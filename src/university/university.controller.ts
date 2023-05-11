@@ -50,6 +50,7 @@ export class UniversityController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'update university' })
   async update(
     @Param('id') id: string,
     @Body() updateUniversityDto: UpdateUniversityDto,

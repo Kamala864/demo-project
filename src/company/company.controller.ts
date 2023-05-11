@@ -50,6 +50,7 @@ export class CompanyController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'update company' })
   async update(
     @Param('id') id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
@@ -62,6 +63,7 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'delete company' })
   async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,

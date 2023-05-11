@@ -22,6 +22,7 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   @Post()
+  @ApiOperation({ summary: 'create student' })
   async create(@Body() createStudentDto: CreateStudentDto) {
     StudentSchema.parse(createStudentDto);
     return {
@@ -40,6 +41,7 @@ export class StudentController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'get student by id' })
   async findOne(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
@@ -48,6 +50,7 @@ export class StudentController {
   }
 
   @Patch(':id')
+  @ApiOperation({ summary: 'update student' })
   async update(
     @Param('id') id: string,
     @Body() updateStudentDto: UpdateStudentDto,
@@ -60,6 +63,7 @@ export class StudentController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'delete student' })
   async remove(@Param('id') id: string) {
     return {
       status: HttpStatus.OK,
