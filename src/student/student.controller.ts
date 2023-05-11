@@ -14,7 +14,7 @@ import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { StudentSchema } from '../schemas/studentSchema';
-import { BaseFilterDto } from '../../src/common/base.filter';
+import { BaseFilterDto } from '../common/base.filter';
 
 @ApiTags('Student')
 @Controller('api/v1/student')

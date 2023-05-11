@@ -41,11 +41,10 @@ export class ProjectController {
   }
 
   @Get('get-similarity')
-  async findSimilarity() {
-    console.log('data');
+  async findSimilarity(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.findSimilarity(),
+      data: await this.projectService.findSimilarity(params.skip, params.take),
     };
   }
 

@@ -5,6 +5,7 @@ import { ProjectService } from '../../../src/project/project.service';
 import { CreateCompanyDto } from '../../../src/company/dto/create-company.dto';
 import { CreateProjectDto } from '../../../src/project/dto/create-project.dto';
 import { UpdateProjectDto } from 'src/project/dto/update-project.dto';
+import { LevenshteinDistance } from 'natural';
 
 describe('ProjectService', () => {
   let projectService: ProjectService;
@@ -202,6 +203,107 @@ describe('ProjectService', () => {
       });
 
       expect(removedProject).toBeNull();
+    });
+  });
+
+  describe('findSimilarity', () => {
+    it('should calculate similarity values for projects', async () => {
+      // Mock the Prisma service methods
+      const mockProjectFindFirst = jest.spyOn(
+        prismaService.project,
+        'findFirst',
+      );
+      const mockProjectFindMany = jest.spyOn(prismaService.project, 'findMany');
+
+      // Mock the returned data
+      const createdCompany = await prismaService.company.create({
+        data: {
+          name: 'company name',
+          description: 'Company of Mathematics',
+        },
+      });
+      const createdUniversity = await prismaService.university.create({
+        data: {
+          name: 'company name',
+          description: 'Company of Mathematics',
+        },
+      });
+      const exampleProject = {
+        id: 'exampleId',
+        name: 'Example Project',
+        description: 'Example description',
+        createdAt: new Date(), // Add createdAt property
+        universityId: createdUniversity.id, // Add universityId property
+        companyId: createdCompany.id, // Add companyId property
+      };
+      const projects = [
+        {
+          id: 'project1',
+          name: 'Project 1',
+          description: 'Description 1',
+          createdAt: new Date(), // Add createdAt property
+          universityId: createdUniversity.id, // Add universityId property
+          companyId: createdCompany.id, // Add companyId property
+        },
+        {
+          id: 'project2',
+          name: 'Project 2',
+          description: 'Description 2',
+          createdAt: new Date(), // Add createdAt property
+          universityId: createdUniversity.id, // Add universityId property
+          companyId: createdCompany.id, // Add companyId property
+        },
+      ];
+
+      // Configure the mock implementation for the Prisma service methods
+      mockProjectFindFirst.mockResolvedValue(exampleProject);
+      mockProjectFindMany.mockResolvedValue(projects);
+
+      // Call the service method
+      const result = await projectService.findSimilarity(0, 10);
+
+      // Assertions
+      expect(mockProjectFindFirst).toHaveBeenCalled();
+      expect(mockProjectFindMany).toHaveBeenCalledWith({
+        where: { NOT: { id: exampleProject.id } },
+        select: { name: true, description: true },
+        take: 10,
+        skip: 0,
+      });
+      expect(result).toHaveLength(projects.length);
+
+      // Validate the similarity calculations for each project
+      result.forEach((similarity, index) => {
+        const project = projects[index];
+        const nameDistance = LevenshteinDistance(
+          exampleProject.name,
+          project.name,
+        );
+        const descriptionDistance = LevenshteinDistance(
+          exampleProject.description,
+          project.description,
+        );
+        const nameSimilarity =
+          (1 -
+            nameDistance /
+              Math.max(exampleProject.name.length, project.name.length)) *
+          100;
+        const descriptionSimilarity =
+          (1 -
+            descriptionDistance /
+              Math.max(
+                exampleProject.description.length,
+                project.description.length,
+              )) *
+          100;
+
+        expect(similarity.nameSimilarity).toBe(
+          ` ${project.name}: ${nameSimilarity.toFixed(2)}%`,
+        );
+        expect(similarity.descriptionSimilarity).toBe(
+          ` ${project.description}: ${descriptionSimilarity.toFixed(2)}%`,
+        );
+      });
     });
   });
 });
