@@ -38,42 +38,44 @@ export class ProjectService {
     return this.prisma.project.delete({ where: { id: id } });
   }
 
-  async findSimilarity() {
-    const existing = await this.prisma.project.findMany({
-      orderBy: [{ createdAt: 'desc' }],
+  async findSimilarity(skip: number, take: number) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
+    const { id, name, description } = await this.prisma.project.findFirst({
+      orderBy: { createdAt: 'desc' },
     });
-    const newProjectName = existing[0].name;
-    const newProjectDescription = existing[0].description;
-    existing.shift();
-    const result = [];
-    for (const project of existing) {
-      const nameDistance = LevenshteinDistance(newProjectName, project.name);
+
+    const projects = await this.prisma.project.findMany({
+      where: { NOT: { id } },
+      select: { name: true, description: true },
+      take: validTake,
+      skip: validSkip,
+    });
+
+    const similarityPromises = projects.map(async (project) => {
+      const nameDistance = LevenshteinDistance(name, project.name);
       const descriptionDistance = LevenshteinDistance(
-        newProjectDescription,
+        description,
         project.description,
       );
+
       const nameSimilarity =
-        (1 -
-          nameDistance / Math.max(newProjectName.length, project.name.length)) *
-        100;
+        (1 - nameDistance / Math.max(name.length, project.name.length)) * 100;
       const descriptionSimilarity =
         (1 -
           descriptionDistance /
-            Math.max(
-              newProjectDescription.length,
-              project.description.length,
-            )) *
+            Math.max(description.length, project.description.length)) *
         100;
-      result.push(
-        { nameSimilarity: ` ${project.name}: ${nameSimilarity.toFixed(2)}%` },
-        {
-          descriptionSimilarity: ` ${
-            project.description
-          }: ${descriptionSimilarity.toFixed(2)}%`,
-        },
-      );
-    }
 
+      return {
+        nameSimilarity: ` ${project.name}: ${nameSimilarity.toFixed(2)}%`,
+        descriptionSimilarity: ` ${
+          project.description
+        }: ${descriptionSimilarity.toFixed(2)}%`,
+      };
+    });
+
+    const result = await Promise.all(similarityPromises);
     return result;
   }
 }

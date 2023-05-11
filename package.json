@@ -16,8 +16,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:init": "jest -i --watch --config jest-init.json",
+    "test:int": "jest --config ./test/jest-e2e.json",
     "test:e": "jest -i --watch --config e2e-init.json"
   },
   "dependencies": {

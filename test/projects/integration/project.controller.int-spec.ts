@@ -189,7 +189,6 @@ describe('Project (e2e)', () => {
       const createdProject = await prismaService.project.create({
         data: projectData,
       });
-
       const response = await request(app.getHttpServer())
         .get(`/api/v1/project/${createdProject.id}`)
         .expect(HttpStatus.OK);
@@ -227,7 +226,6 @@ describe('Project (e2e)', () => {
           companyId: createCompany.id,
         },
       });
-
       await request(app.getHttpServer())
         .delete(`/api/v1/project/${createdProject.id}`)
         .expect(HttpStatus.OK);
@@ -235,7 +233,6 @@ describe('Project (e2e)', () => {
       const removedStudent = await prismaService.student.findUnique({
         where: { id: createdProject.id },
       });
-
       expect(removedStudent).toBeNull();
     });
   });
