@@ -5,4 +5,6 @@ export class CreateCompanyDto {
   name: string;
   @ApiProperty()
   description: string;
+
+  // createdAt: Date;
 }

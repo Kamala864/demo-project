@@ -7,12 +7,14 @@ import {
   Param,
   Delete,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { UniversityService } from './university.service';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UniversitySchema } from 'src/schemas/universitySchema';
+import { UniversitySchema } from '../schemas/universitySchema';
+import { BaseFilterDto } from '../common/base.filter';
 
 @ApiTags('University')
 @Controller('api/v1/university')
@@ -31,10 +33,10 @@ export class UniversityController {
 
   @Get()
   @ApiOperation({ summary: 'get all university' })
-  async findAll() {
+  async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.universityService.findAll(),
+      data: await this.universityService.findAll(+params.take, +params.skip),
     };
   }
 
@@ -48,7 +50,6 @@ export class UniversityController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'update university ' })
   async update(
     @Param('id') id: string,
     @Body() updateUniversityDto: UpdateUniversityDto,
@@ -56,7 +57,7 @@ export class UniversityController {
     UniversitySchema.parse(updateUniversityDto);
     return {
       status: HttpStatus.OK,
-      date: await this.universityService.update(id, updateUniversityDto),
+      data: await this.universityService.update(id, updateUniversityDto),
     };
   }
 

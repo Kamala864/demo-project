@@ -7,7 +7,6 @@ import { CompanyModule } from './company/company.module';
 import { UniversityModule } from './university/university.module';
 import { ProfessorModule } from './professor/professor.module';
 import { ProjectModule } from './project/project.module';
-import { ProjectTrigger } from './triggers/project.trigger';
 import { PrismaClient } from '@prisma/client';
 
 @Module({
@@ -20,24 +19,6 @@ import { PrismaClient } from '@prisma/client';
     ProjectModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaClient, ProjectTrigger],
+  providers: [AppService, PrismaClient],
 })
 export class AppModule {}
-// export class AppModule {
-//   constructor(
-//     private prisma: PrismaClient,
-//     private projectTrigger: ProjectTrigger,
-//   ) {
-//     this.prisma.$on('beforeExit', async () => {
-//       await this.prisma.$disconnect();
-//     });
-
-//     this.prisma.$use(async (params, next) => {
-//       if (params.model === 'Project' && params.action === 'create') {
-//         await this.projectTrigger.handleProjectCreatedEvent(params.args[0]);
-//       }
-
-//       return next(params);
-//     });
-//   }
-// }

@@ -13,4 +13,11 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
       await app.close();
     });
   }
+  async clearDatabase() {
+    await this.project.deleteMany();
+    await this.student.deleteMany();
+    await this.professor.deleteMany();
+    await this.university.deleteMany();
+    await this.company.deleteMany();
+  }
 }
