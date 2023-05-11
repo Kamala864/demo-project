@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUniversityDto } from './dto/create-university.dto';
 import { UpdateUniversityDto } from './dto/update-university.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { skip } from 'rxjs';
 
 @Injectable()
 export class UniversityService {
@@ -11,8 +12,13 @@ export class UniversityService {
     return this.prisma.university.create({ data: createUniversityDto });
   }
 
-  findAll() {
-    return this.prisma.university.findMany();
+  findAll(take: number, skip: number) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
+    return this.prisma.university.findMany({
+      skip: validSkip,
+      take: validTake,
+    });
   }
 
   findOne(id: string) {

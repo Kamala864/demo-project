@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class StudentService {
@@ -10,8 +10,13 @@ export class StudentService {
     return this.prisma.student.create({ data: createStudentDto });
   }
 
-  findAll() {
-    return this.prisma.student.findMany();
+  findAll(skip: number, take: number) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
+    return this.prisma.student.findMany({
+      skip: validSkip,
+      take: validTake,
+    });
   }
 
   findOne(id: string) {
