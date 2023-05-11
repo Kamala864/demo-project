@@ -1,6 +1,6 @@
 # demo-project
-
-#1.git clone <repository-url>
+<h1>
+	#1.git clone <repository-url></h1>
 #2.cd demo-project
 #3.npm install
 #4.add trigger function given in trigger.sql file to database.
