@@ -21,12 +21,10 @@ describe('ProjectService', () => {
   });
 
   afterEach(async () => {
-    // Clean up the testing database after each test
     await prismaService.clearDatabase();
   });
 
   afterAll(async () => {
-    // Clean up any created data
     await prismaService.project.deleteMany();
     await prismaService.company.deleteMany();
     await prismaService.university.deleteMany();
@@ -35,7 +33,6 @@ describe('ProjectService', () => {
 
   describe('createProject', () => {
     it('should create a new project', async () => {
-      // Create a university first
       const universityData: CreateUniversityDto = {
         name: 'University of Example',
         description: 'A university example',
@@ -45,7 +42,6 @@ describe('ProjectService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const companyData: CreateCompanyDto = {
         name: 'Company',
         description: 'Company description',
@@ -89,7 +85,6 @@ describe('ProjectService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const companyData: CreateCompanyDto = {
         name: 'company name',
         description: 'Company of Mathematics',
@@ -104,8 +99,6 @@ describe('ProjectService', () => {
         universityId: createdUniversity.id,
         companyId: createdCompany.id,
       };
-
-      //  const createdProfessor = await prismaService.professor(professorData);
 
       const createdProject = await projectService.create(projectData);
       const foundProject = await projectService.findOne(createdProject.id);
@@ -144,8 +137,6 @@ describe('ProjectService', () => {
         universityId: createdUniversity.id,
         companyId: createdCompany.id,
       };
-
-      //  const createdProfessor = await prismaService.professor(professorData);
 
       const createdProject = await projectService.create(projectData);
 
@@ -191,13 +182,8 @@ describe('ProjectService', () => {
         companyId: createdCompany.id,
       };
 
-      //  const createdProfessor = await prismaService.professor(professorData);
-
       const createdProject = await projectService.create(projectData);
-
       await projectService.remove(createdProject.id);
-
-      // Ensure the professor is removed
       const removedProject = await prismaService.professor.findUnique({
         where: { id: createdProject.id },
       });
@@ -208,14 +194,11 @@ describe('ProjectService', () => {
 
   describe('findSimilarity', () => {
     it('should calculate similarity values for projects', async () => {
-      // Mock the Prisma service methods
       const mockProjectFindFirst = jest.spyOn(
         prismaService.project,
         'findFirst',
       );
       const mockProjectFindMany = jest.spyOn(prismaService.project, 'findMany');
-
-      // Mock the returned data
       const createdCompany = await prismaService.company.create({
         data: {
           name: 'company name',
@@ -232,26 +215,26 @@ describe('ProjectService', () => {
         id: 'exampleId',
         name: 'Example Project',
         description: 'Example description',
-        createdAt: new Date(), // Add createdAt property
-        universityId: createdUniversity.id, // Add universityId property
-        companyId: createdCompany.id, // Add companyId property
+        createdAt: new Date(),
+        universityId: createdUniversity.id,
+        companyId: createdCompany.id,
       };
       const projects = [
         {
           id: 'project1',
           name: 'Project 1',
           description: 'Description 1',
-          createdAt: new Date(), // Add createdAt property
-          universityId: createdUniversity.id, // Add universityId property
-          companyId: createdCompany.id, // Add companyId property
+          createdAt: new Date(),
+          universityId: createdUniversity.id,
+          companyId: createdCompany.id,
         },
         {
           id: 'project2',
           name: 'Project 2',
           description: 'Description 2',
-          createdAt: new Date(), // Add createdAt property
-          universityId: createdUniversity.id, // Add universityId property
-          companyId: createdCompany.id, // Add companyId property
+          createdAt: new Date(),
+          universityId: createdUniversity.id,
+          companyId: createdCompany.id,
         },
       ];
 

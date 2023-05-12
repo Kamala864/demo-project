@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-
 import * as request from 'supertest';
 import { PrismaService } from '../../../src/prisma/prisma.service';
 import { AppModule } from '../../../src/app.module';
@@ -48,7 +47,6 @@ describe('Company (e2e)', () => {
 
   describe('GET /company', () => {
     it('should return an array of companies', async () => {
-      // Create some test companies using the Prisma client
       await prismaService.company.createMany({
         data: [
           { name: 'Company 1', description: 'Description 1' },
@@ -69,15 +67,12 @@ describe('Company (e2e)', () => {
 
   describe('GET /company/:id', () => {
     it('should return the company with the given id', async () => {
-      // Create a test company using the Prisma client
       const createdCompany = await prismaService.company.create({
         data: { name: 'Test Company', description: 'Test Description' },
       });
-
       const response = await request(app.getHttpServer())
         .get(`/api/v1/company/${createdCompany.id}`)
         .expect(HttpStatus.OK);
-
       expect(response.body.status).toBe(HttpStatus.OK);
       expect(response.body.data.id).toBe(createdCompany.id);
       expect(response.body.data.name).toBe(createdCompany.name);
@@ -86,21 +81,17 @@ describe('Company (e2e)', () => {
   });
   describe('PATCH /company/:id', () => {
     it('should update the company with the given id', async () => {
-      // Create a test company using the Prisma client
       const createdCompany = await prismaService.company.create({
         data: { name: 'Test Company', description: 'Test Description' },
       });
-
       const updateCompanyDto = {
         name: 'Updated Company',
         description: 'Updated Description',
       };
-
       const response = await request(app.getHttpServer())
         .patch(`/api/v1/company/${createdCompany.id}`)
         .send(updateCompanyDto)
         .expect(HttpStatus.OK);
-
       expect(response.body.status).toBe(HttpStatus.OK);
       expect(response.body.data.id).toBe(createdCompany.id);
       expect(response.body.data.name).toBe(updateCompanyDto.name);
@@ -113,15 +104,12 @@ describe('Company (e2e)', () => {
       const createdCompany = await prismaService.company.create({
         data: { name: 'Test Company', description: 'Test Description' },
       });
-
       await request(app.getHttpServer())
         .delete(`/api/v1/company/${createdCompany.id}`)
         .expect(HttpStatus.OK);
-
       const removedCompany = await prismaService.company.findUnique({
         where: { id: createdCompany.id },
       });
-
       expect(removedCompany).toBeNull();
     });
   });

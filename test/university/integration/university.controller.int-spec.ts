@@ -1,12 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-
 import * as request from 'supertest';
 import { AppModule } from '../../../src/app.module';
 import { PrismaService } from '../../../src/prisma/prisma.service';
-import { UpdateUniversityDto } from '../../../src/university/dto/update-university.dto';
-import { CreateUniversityDto } from 'src/university/dto/create-university.dto';
-import { UniversityService } from 'src/university/university.service';
 
 describe('University (e2e)', () => {
   let app: INestApplication;
@@ -53,7 +49,6 @@ describe('University (e2e)', () => {
 
   describe('GET /university', () => {
     it('should return an array of universities', async () => {
-      // Create some test universities using the Prisma client
       await prismaService.university.createMany({
         data: [
           { name: 'University 1', description: 'Description 1' },
@@ -71,10 +66,8 @@ describe('University (e2e)', () => {
       expect(response.body.data.length).toBe(3);
     });
   });
-
   describe('GET /university/:id', () => {
     it('should return the university with the given id', async () => {
-      // Create a test university using the Prisma client
       const createdUniversity = await prismaService.university.create({
         data: { name: 'Test University', description: 'Test Description' },
       });
@@ -93,16 +86,13 @@ describe('University (e2e)', () => {
   });
   describe('PATCH /university/:id', () => {
     it('should update the university with the given id', async () => {
-      // Create a test university using the Prisma client
       const createdUniversity = await prismaService.university.create({
         data: { name: 'Test University', description: 'Test Description' },
       });
-
       const updateUniversityDto = {
         name: 'Updated University',
         description: 'Updated Description',
       };
-
       const response = await request(app.getHttpServer())
         .patch(`/api/v1/university/${createdUniversity.id}`)
         .send(updateUniversityDto)

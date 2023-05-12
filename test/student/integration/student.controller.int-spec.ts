@@ -71,7 +71,6 @@ describe('Student (e2e)', () => {
 
   describe('GET /student', () => {
     it('should return an array of students', async () => {
-      // Create some test universities using the Prisma client
       const universityData = {
         name: 'Test University',
         description: 'Test Description',
@@ -122,7 +121,6 @@ describe('Student (e2e)', () => {
 
   describe('PATCH /student/:id', () => {
     it('should update the student with the given id', async () => {
-      // Create a test university using the Prisma client
       const universityData = {
         name: 'Test Student',
         description: 'Test Description',
@@ -186,12 +184,7 @@ describe('Student (e2e)', () => {
       const createdProfessor = await prismaService.professor.create({
         data: professorData,
       });
-      const createStudentDto = {
-        name: 'Test Student',
-        description: 'Test Description',
-        universityId: createdUniversity.id,
-        professorId: createdProfessor.id,
-      };
+
       const createdStudent = await prismaService.student.create({
         data: {
           name: 'Test Professor',

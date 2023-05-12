@@ -1,6 +1,3 @@
-// describe('University', () => {
-//   it.todo('should pass');
-// });
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../src/prisma/prisma.service';
 import { UniversityService } from '../../../src/university/university.service';
@@ -21,7 +18,6 @@ describe('UniversityService', () => {
   });
 
   afterEach(async () => {
-    // Clean up the testing database after each test
     await prismaService.clearDatabase();
   });
 
@@ -62,7 +58,6 @@ describe('UniversityService', () => {
 
   describe('findOne', () => {
     it('should return the university with the given id', async () => {
-      // Create a university for testing
       const createUniversityDto: CreateUniversityDto = {
         name: 'Test University',
         description: 'Test Description',
@@ -83,7 +78,6 @@ describe('UniversityService', () => {
 
   describe('update', () => {
     it('should update the university with the given id', async () => {
-      // Create a university for testing
       const createUniversityDto: CreateUniversityDto = {
         name: 'Test University',
         description: 'Test Description',
@@ -112,7 +106,6 @@ describe('UniversityService', () => {
   });
   describe('remove', () => {
     it('should remove the university with the given id', async () => {
-      // Create a university for testing
       const createUniversityDto: CreateUniversityDto = {
         name: 'Test University',
         description: 'Test Description',
@@ -122,12 +115,9 @@ describe('UniversityService', () => {
       });
 
       await universityService.remove(createdUniversity.id);
-
-      // Ensure the university is removed
       const removedUniversity = await prismaService.university.findUnique({
         where: { id: createdUniversity.id },
       });
-
       expect(removedUniversity).toBeNull();
     });
   });
