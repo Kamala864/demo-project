@@ -62,7 +62,6 @@ describe('Professor (e2e)', () => {
 
   describe('GET /professor', () => {
     it('should return an array of universities', async () => {
-      // Create some test universities using the Prisma client
       const universityData = {
         name: 'Test University',
         description: 'Test Description',
@@ -102,7 +101,6 @@ describe('Professor (e2e)', () => {
 
   describe('GET /professor/:id', () => {
     it('should return the university with the given id', async () => {
-      // Create a test university using the Prisma client
       const universityData = {
         name: 'Test University',
         description: 'Test Description',
@@ -133,7 +131,6 @@ describe('Professor (e2e)', () => {
   });
   describe('PATCH /university/:id', () => {
     it('should update the university with the given id', async () => {
-      // Create a test university using the Prisma client
       const universityData = {
         name: 'Test University',
         description: 'Test Description',

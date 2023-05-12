@@ -20,13 +20,10 @@ describe('CompanyService', () => {
   });
 
   afterEach(async () => {
-    // Clean up the testing database after each test
     await prismaService.clearDatabase();
   });
 
   afterAll(async () => {
-    // Clean up any created data
-
     await prismaService.student.deleteMany();
     await prismaService.professor.deleteMany();
     await prismaService.university.deleteMany();
@@ -35,7 +32,6 @@ describe('CompanyService', () => {
 
   describe('createStudent', () => {
     it('should create a new student', async () => {
-      // Create a university first
       const universityData: CreateUniversityDto = {
         name: 'University of Example',
         description: 'A university example',
@@ -45,14 +41,12 @@ describe('CompanyService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
         name: 'Professor',
         description: 'Professor of Mathematics',
         universityId: createdUniversity.id,
       };
 
-      //  const createdProfessor = await prismaService.professor(professorData);
       const createdProfessor = await prismaService.professor.create({
         data: professorData,
       });
@@ -91,7 +85,6 @@ describe('CompanyService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
         name: 'John Doe',
         description: 'Professor of Mathematics',
@@ -128,7 +121,6 @@ describe('CompanyService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
         name: 'John Doe',
         description: 'Professor of Mathematics',
@@ -172,7 +164,6 @@ describe('CompanyService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
         name: 'Professor',
         description: 'Professor of Mathematics',
@@ -192,7 +183,6 @@ describe('CompanyService', () => {
 
       await studentService.remove(createdStudent.id);
 
-      // Ensure the professor is removed
       const removedStudent = await prismaService.professor.findUnique({
         where: { id: createdStudent.id },
       });

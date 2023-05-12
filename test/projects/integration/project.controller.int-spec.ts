@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-
 import * as request from 'supertest';
 import { AppModule } from '../../../src/app.module';
 import { PrismaService } from '../../../src/prisma/prisma.service';
@@ -69,7 +68,6 @@ describe('Project (e2e)', () => {
 
   describe('GET /project', () => {
     it('should return an array of project', async () => {
-      // Create some test universities using the Prisma client
       const universityData = {
         name: 'Test University',
         description: 'Test Description',
@@ -119,7 +117,6 @@ describe('Project (e2e)', () => {
 
   describe('PATCH /project/:id', () => {
     it('should update the project with the given id', async () => {
-      // Create a test university using the Prisma client
       const universityData = {
         name: 'Test university',
         description: 'Test Description',

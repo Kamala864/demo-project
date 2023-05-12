@@ -1,17 +1,12 @@
-// describe('University', () => {
-//   it.todo('should pass');
-// });
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../../../src/prisma/prisma.service';
 import { ProfessorService } from '../../../src/professor/professor.service';
 import { CreateProfessorDto } from '../../../src/professor/dto/create-professor.dto';
 import { CreateUniversityDto } from '../../../src/university/dto/create-university.dto';
-import { UniversityService } from '../../../src/university/university.service';
 import { UpdateProfessorDto } from 'src/professor/dto/update-professor.dto';
 
 describe('ProfessorService', () => {
   let professorService: ProfessorService;
-  let universityService: UniversityService;
   let prismaService: PrismaService;
 
   beforeEach(async () => {
@@ -24,7 +19,6 @@ describe('ProfessorService', () => {
   });
 
   afterEach(async () => {
-    // Clean up the testing database after each test
     await prismaService.professor.deleteMany();
     await prismaService.university.deleteMany();
   });
@@ -34,7 +28,6 @@ describe('ProfessorService', () => {
   });
   describe('createProfessor', () => {
     it('should create a new professor', async () => {
-      // Create a university first
       const universityData: CreateUniversityDto = {
         name: 'University of Example',
         description: 'A university example',
@@ -44,14 +37,11 @@ describe('ProfessorService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
-        name: 'John Doe',
+        name: 'Professor',
         description: 'Professor of Mathematics',
         universityId: createdUniversity.id,
       };
-
-      //  const createdProfessor = await prismaService.professor(professorData);
 
       const createdProfessor = await professorService.create(professorData);
       expect(createdProfessor).toHaveProperty('id');
@@ -83,14 +73,11 @@ describe('ProfessorService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
-        name: 'John Doe',
+        name: 'Professor',
         description: 'Professor of Mathematics',
         universityId: createdUniversity.id,
       };
-
-      //  const createdProfessor = await prismaService.professor(professorData);
 
       const createdProfessor = await professorService.create(professorData);
       const foundProfessor = await professorService.findOne(
@@ -116,14 +103,11 @@ describe('ProfessorService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
         name: 'John Doe',
         description: 'Professor of Mathematics',
         universityId: createdUniversity.id,
       };
-
-      //  const createdProfessor = await prismaService.professor(professorData);
 
       const createdProfessor = await professorService.create(professorData);
 
@@ -154,7 +138,6 @@ describe('ProfessorService', () => {
         data: universityData,
       });
 
-      // Create a professor with the created university's ID
       const professorData: CreateProfessorDto = {
         name: 'John Doe',
         description: 'Professor of Mathematics',
@@ -165,7 +148,6 @@ describe('ProfessorService', () => {
 
       await professorService.remove(createdProfessor.id);
 
-      // Ensure the professor is removed
       const removedProfessor = await prismaService.professor.findUnique({
         where: { id: createdProfessor.id },
       });

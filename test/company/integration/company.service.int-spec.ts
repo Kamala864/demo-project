@@ -18,7 +18,6 @@ describe('CompanyService', () => {
   });
 
   afterEach(async () => {
-    // Clean up the testing database after each test
     await prismaService.clearDatabase();
   });
 
@@ -51,42 +50,8 @@ describe('CompanyService', () => {
     });
   });
 
-  // describe('findAll', () => {
-  //   it('should return an array of companies', async () => {
-  //     // Mock the expected data to be returned by Prisma
-  //     const mockCompanies = [
-  //       {
-  //         id: '1',
-  //         name: 'Company A',
-  //         description: 'Company Description',
-  //         createdAt: new Date(),
-  //       },
-  //       {
-  //         id: '2',
-  //         name: 'Company B',
-  //         description: 'Company Description',
-  //         createdAt: new Date(),
-  //       },
-  //     ];
-
-  //     // Use the Prisma Client Mock to define the behavior of findMany
-  //     jest
-  //       .spyOn(prismaService.company, 'findMany')
-  //       .mockResolvedValue(mockCompanies);
-
-  //     // Invoke the `findAll` method
-  //     const params = { take: 10, skip: 0 };
-  //     const result = await companyService.findAll(+params.skip, +params.take);
-
-  //     // Expectations
-  //     expect(result).toEqual(mockCompanies);
-  //     expect(prismaService.company.findMany).toHaveBeenCalledTimes(1);
-  //   });
-  // });
-
   describe('findOne', () => {
     it('should return the company with the given id', async () => {
-      // Create a company for testing
       const createCompanyDto: CreateCompanyDto = {
         name: 'Test Company',
         description: 'Test Description',
@@ -105,7 +70,6 @@ describe('CompanyService', () => {
 
   describe('update', () => {
     it('should update the company with the given id', async () => {
-      // Create a company for testing
       const createCompanyDto: CreateCompanyDto = {
         name: 'Test Company',
         description: 'Test Description',
@@ -132,7 +96,6 @@ describe('CompanyService', () => {
   });
   describe('remove', () => {
     it('should remove the company with the given id', async () => {
-      // Create a company for testing
       const createCompanyDto: CreateCompanyDto = {
         name: 'Test Company',
         description: 'Test Description',
@@ -142,12 +105,9 @@ describe('CompanyService', () => {
       });
 
       await companyService.remove(createdCompany.id);
-
-      // Ensure the company is removed
       const removedCompany = await prismaService.company.findUnique({
         where: { id: createdCompany.id },
       });
-
       expect(removedCompany).toBeNull();
     });
   });
