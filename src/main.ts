@@ -17,7 +17,7 @@ async function bootstrap() {
 
   SwaggerModule.setup('api/v1/docs', app, document);
   listenToNotifications();
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 
 bootstrap()
