@@ -21,6 +21,20 @@ export class ProjectService {
       take: validTake,
     });
   }
+  search(skip: number, take: number, search: string) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
+    return this.prisma.project.findMany({
+      skip: validSkip,
+      take: validTake,
+      where: {
+        OR: [
+          { name: { contains: search } },
+          { description: { contains: search } },
+        ],
+      },
+    });
+  }
 
   findOne(id: string) {
     return this.prisma.project.findUnique({ where: { id: id } });

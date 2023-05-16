@@ -19,6 +19,21 @@ export class ProfessorService {
     });
   }
 
+  search(take: number, skip: number, search: string) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
+    return this.prisma.professor.findMany({
+      skip: validSkip,
+      take: validTake,
+      where: {
+        OR: [
+          { name: { contains: search } },
+          { description: { contains: search } },
+        ],
+      },
+    });
+  }
+
   findOne(id: string) {
     return this.prisma.professor.findUnique({
       where: { id: id },

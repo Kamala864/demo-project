@@ -39,6 +39,18 @@ export class CompanyController {
       data: await this.companyService.findAll(+params.take, +params.skip),
     };
   }
+  @Get('search')
+  @ApiOperation({ summary: 'search company' })
+  async search(@Query() params: BaseFilterDto) {
+    return {
+      status: HttpStatus.OK,
+      data: await this.companyService.search(
+        +params.take,
+        +params.skip,
+        params.search,
+      ),
+    };
+  }
 
   @Get(':id')
   @ApiOperation({ summary: 'get company by id' })
