@@ -13,7 +13,15 @@ export class ProjectService {
     return project;
   }
 
-  findAll(skip: number, take: number, search: string) {
+  findAll(skip: number, take: number) {
+    const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
+    const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
+    return this.prisma.project.findMany({
+      skip: validSkip,
+      take: validTake,
+    });
+  }
+  search(skip: number, take: number, search: string) {
     const validTake = Number.isNaN(take) ? 10 : Math.max(0, Math.floor(take));
     const validSkip = Number.isNaN(skip) ? 0 : Math.max(0, Math.floor(skip));
     return this.prisma.project.findMany({

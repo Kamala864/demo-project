@@ -36,7 +36,15 @@ export class UniversityController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.universityService.findAll(
+      data: await this.universityService.findAll(+params.take, +params.skip),
+    };
+  }
+  @Get('search')
+  @ApiOperation({ summary: 'get all university' })
+  async search(@Query() params: BaseFilterDto) {
+    return {
+      status: HttpStatus.OK,
+      data: await this.universityService.search(
         +params.take,
         +params.skip,
         params.search,

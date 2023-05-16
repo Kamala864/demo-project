@@ -36,9 +36,17 @@ export class StudentController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.studentService.findAll(
-        +params.skip,
+      data: await this.studentService.findAll(+params.skip, +params.take),
+    };
+  }
+  @Get('search')
+  @ApiOperation({ summary: 'search student' })
+  async search(@Query() params: BaseFilterDto) {
+    return {
+      status: HttpStatus.OK,
+      data: await this.studentService.search(
         +params.take,
+        +params.skip,
         params.search,
       ),
     };

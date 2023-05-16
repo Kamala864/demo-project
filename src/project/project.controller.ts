@@ -32,11 +32,19 @@ export class ProjectController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'get all student' })
+  @ApiOperation({ summary: 'get all project' })
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.findAll(
+      data: await this.projectService.findAll(+params.skip, +params.take),
+    };
+  }
+  @Get('search')
+  @ApiOperation({ summary: 'search student' })
+  async search(@Query() params: BaseFilterDto) {
+    return {
+      status: HttpStatus.OK,
+      data: await this.projectService.search(
         +params.skip,
         +params.take,
         params.search,

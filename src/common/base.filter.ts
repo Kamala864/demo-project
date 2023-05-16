@@ -7,6 +7,6 @@ export class BaseFilterDto {
   @ApiProperty({ required: false, default: 10 })
   take: number;
 
-  @ApiProperty({ required: false, default: 10 })
+  @ApiProperty({ required: false })
   search: string;
 }

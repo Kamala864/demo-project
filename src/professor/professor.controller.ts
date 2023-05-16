@@ -36,7 +36,15 @@ export class ProfessorController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.professorService.findAll(
+      data: await this.professorService.findAll(+params.take, +params.skip),
+    };
+  }
+  @Get('search')
+  @ApiOperation({ summary: 'search professors' })
+  async search(@Query() params: BaseFilterDto) {
+    return {
+      status: HttpStatus.OK,
+      data: await this.professorService.search(
         +params.take,
         +params.skip,
         params.search,
