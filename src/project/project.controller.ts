@@ -36,7 +36,11 @@ export class ProjectController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.projectService.findAll(+params.skip, +params.take),
+      data: await this.projectService.findAll(
+        +params.skip,
+        +params.take,
+        params.search,
+      ),
     };
   }
 

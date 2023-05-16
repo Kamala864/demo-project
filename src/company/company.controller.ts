@@ -36,7 +36,11 @@ export class CompanyController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.companyService.findAll(+params.take, +params.skip),
+      data: await this.companyService.findAll(
+        +params.take,
+        +params.skip,
+        params.search,
+      ),
     };
   }
 

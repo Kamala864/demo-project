@@ -36,7 +36,11 @@ export class ProfessorController {
   async findAll(@Query() params: BaseFilterDto) {
     return {
       status: HttpStatus.OK,
-      data: await this.professorService.findAll(+params.take, +params.skip),
+      data: await this.professorService.findAll(
+        +params.take,
+        +params.skip,
+        params.search,
+      ),
     };
   }
 
